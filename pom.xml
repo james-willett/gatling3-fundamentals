@@ -4,7 +4,7 @@
 
 	<groupId>com.excilys.ebi.gatling</groupId>
 	<artifactId>gatling-maven-plugin-demo</artifactId>
-	<version>1.4.2</version>
+	<version>1.4.3</version>
 	<packaging>jar</packaging>
 
 	<repositories>
@@ -25,7 +25,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gatling.version>1.4.2</gatling.version>
+		<gatling.version>1.4.3</gatling.version>
 	</properties>
 
 	<dependencies>

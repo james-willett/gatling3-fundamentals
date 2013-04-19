@@ -1,17 +1,16 @@
 package advanced
 
-import com.excilys.ebi.gatling.core.Predef._
-import com.excilys.ebi.gatling.http.Predef._
-import com.excilys.ebi.gatling.jdbc.Predef._
-import com.excilys.ebi.gatling.http.Headers.Names._
-import akka.util.duration._
-import assertions._
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+import io.gatling.jdbc.Predef._
+import io.gatling.http.Headers.Names._
+import scala.concurrent.duration._
 
 class AdvancedExampleSimulation extends Simulation {
 
 	val httpConf = httpConfig.baseURL("http://excilys-bank-web.cloudfoundry.com").disableFollowRedirect
 
 	setUp(
-		SomeScenario.scn.users(10).ramp(10).protocolConfig(httpConf),
-		SomeOtherScenario.otherScn.users(5).ramp(20).delay(30).protocolConfig(httpConf))
+		SomeScenario.scn.inject(ramp(10 users) over(10 seconds)).protocolConfig(httpConf),
+		SomeOtherScenario.otherScn.inject(nothingFor(30 seconds), ramp(5 users) over(20 seconds)).protocolConfig(httpConf))
 }

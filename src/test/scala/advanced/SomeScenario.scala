@@ -1,8 +1,8 @@
 package advanced
-import com.excilys.ebi.gatling.core.Predef._
-import com.excilys.ebi.gatling.http.Predef._
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
 import Headers._
-import akka.util.duration._
+import scala.concurrent.duration._
 import bootstrap._
 
 object SomeScenario {
@@ -56,7 +56,7 @@ object SomeScenario {
 						.headers(headers_8))
 				.pause(6, 7)
 		}
-		.doIf(session => session.getAttribute("username") != "user7") {
+		.doIf(session => session("username") != "user7") {
 			exec(
 				http("request_9")
 					.get("/logout")

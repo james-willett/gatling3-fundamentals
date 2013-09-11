@@ -1,14 +1,29 @@
-*.class
-*.log
-
-# sbt specific
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
-cache/
-
-# Scala-IDE specific
+# eclipse conf file
+.settings
+.classpath
+.project
+.manager
 .scala_dependencies
+.cache
+
+# idea conf files
+.idea
+*.iml
+*.ipr
+*.iws
+
+# building
+target
+build
+null
+tmp
+temp
+dist
+test-output
+build.log
+
+# misc
+.DS_Store
+
+# project files to ignore
+!/results/.gitkeep

@@ -53,10 +53,10 @@ object SomeScenario {
 				.exec(
 					http("request_8")
 						.get("/private/bank/account/ACC${account_id}/year/2011/month/11/page/0/operations.json")
-						.headers(headers_8))
+						.headers(headers_6))
 				.pause(6, 7)
 		}
-		.doIf(session => session("username") != "user7") {
+		.doIf(session => session("username").validate[String].map(_ != "user7")) {
 			exec(
 				http("request_9")
 					.get("/logout")

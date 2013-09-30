@@ -94,6 +94,5 @@ class BasicExampleSimulation extends Simulation {
 		.protocols(httpConf)
 		.assertions(
 			global.successfulRequests.percent.is(100),
-			details("Login" / "request_2").responseTime.max.lessThan(2000),
-			details("request_9").requestsPerSec.greaterThan(10))
+			details("Login" / "request_2").responseTime.max.lessThan(2000))
 }

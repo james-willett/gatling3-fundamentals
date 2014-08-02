@@ -4,16 +4,8 @@
 
 	<groupId>io.gatling</groupId>
 	<artifactId>gatling-maven-plugin-demo</artifactId>
-	<version>2.0.0-M3a</version>
+	<version>2.0.0-RC1</version>
 	<packaging>jar</packaging>
-
-	<repositories>
-		<repository>
-			<id>excilys</id>
-			<name>Excilys Repository</name>
-			<url>http://repository.excilys.com/content/groups/public</url>
-		</repository>
-	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -25,7 +17,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gatling.version>2.0.0-M3a</gatling.version>
+		<gatling.version>2.0.0-RC1</gatling.version>
 	</properties>
 
 	<dependencies>
@@ -51,17 +43,11 @@
 						</goals>
 						<configuration>
 							<!-- Default values -->
-							<!--<configDir>src/test/resources</configDir>
+							<!--<configFolder>src/test/resources</configFolder>
 							<dataFolder>src/test/resources/data</dataFolder>
 							<resultsFolder>target/gatling/results</resultsFolder>
 							<requestBodiesFolder>src/test/resources/request-bodies</requestBodiesFolder>
 							<simulationsFolder>src/test/scala</simulationsFolder>
-							<includes>
-								<include>**/*.scala</include>
-							</includes>-->
-							<excludes>
-								<exclude>advanced/*.scala</exclude>
-							</excludes>
 						</configuration>
 					</execution>
 				</executions>

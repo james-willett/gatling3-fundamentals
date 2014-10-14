@@ -5,15 +5,6 @@
 	<groupId>io.gatling</groupId>
 	<artifactId>gatling-maven-plugin-demo</artifactId>
 	<version>2.0.1</version>
-	<packaging>jar</packaging>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>excilys</id>
-			<name>Excilys Repository</name>
-			<url>http://repository.excilys.com/content/groups/public</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

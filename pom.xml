@@ -30,7 +30,7 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>execute</goal>
+							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>

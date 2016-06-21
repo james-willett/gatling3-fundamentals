@@ -8,6 +8,8 @@
   <version>2.2.2</version>
 
   <properties>
+    <source.property>1.8</source.property>
+    <target.property>1.8</target.property>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gatling.version>${project.version}</gatling.version>
     <gatling-plugin.version>2.2.0</gatling-plugin.version>

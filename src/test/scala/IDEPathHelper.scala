@@ -3,7 +3,7 @@ import io.gatling.commons.util.PathHelper._
 
 object IDEPathHelper {
 
-	val gatlingConfUrl: Path = getClass.getClassLoader.getResource("gatling.conf").getPath
+	val gatlingConfUrl: Path = getClass.getClassLoader.getResource("gatling.conf").toURI
 	val projectRootDir = gatlingConfUrl.getParent.getParent.getParent
 
 	val mavenSourcesDirectory = projectRootDir / "src" / "test" / "scala"

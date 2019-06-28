@@ -13,7 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gatling.version>${project.version}</gatling.version>
     <gatling-plugin.version>3.0.1</gatling-plugin.version>
-    <scala-maven-plugin.version>4.1.0</scala-maven-plugin.version>
+    <scala-maven-plugin.version>4.0.2</scala-maven-plugin.version>
   </properties>
 
   <dependencies>

@@ -1,5 +1,6 @@
 import io.gatling.app.Gatling
 import io.gatling.core.config.GatlingPropertiesBuilder
+import simulations._
 
 object Engine extends App {
 

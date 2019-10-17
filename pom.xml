@@ -14,7 +14,7 @@
     <gatling.version>${project.version}</gatling.version>
     <gatling-plugin.version>3.0.3</gatling-plugin.version>
     <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
-    <scala-maven-plugin.version>4.2.0</scala-maven-plugin.version>
+    <scala-maven-plugin.version>4.2.4</scala-maven-plugin.version>
   </properties>
 
   <dependencies>

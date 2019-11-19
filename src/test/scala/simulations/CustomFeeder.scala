@@ -8,20 +8,16 @@ import io.gatling.http.Predef._
 
 import scala.util.Random
 
-// also shows how to use the ElFileBody template
 class CustomFeeder extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
 
-  // declare variables
   var idNumbers = (11 to 20).iterator
   val rnd = new Random()
   val now = LocalDate.now()
   val pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-  // declare helper methods
   def randomString(length: Int) = {
     rnd.alphanumeric.filter(_.isLetter).take(length).mkString
   }
@@ -30,7 +26,6 @@ class CustomFeeder extends Simulation {
     startDate.minusDays(random.nextInt(30)).format(pattern)
   }
 
-  // The custom feeder itself
   val customFeeder = Iterator.continually(Map(
     "gameId" -> idNumbers.next(),
     "name" -> ("Game-" + randomString(5)),
@@ -40,47 +35,42 @@ class CustomFeeder extends Simulation {
     "rating" -> ("Rating-" + randomString(4))
   ))
 
-  /* This is the way to do it inside the body */
-
 //  def postNewGame() = {
-//    repeat(5) {
-//      feed(customFeeder).
-//        exec(http("Post New Game")
-//          .post("videogames/")
-//          .body(StringBody(
-//            "{" +
-//            "\n\t\"id\": ${gameId}," +
-//            "\n\t\"name\": \"${name}\"," +
-//            "\n\t\"releaseDate\": \"${releaseDate}\"," +
-//            "\n\t\"reviewScore\": ${reviewScore}," +
-//            "\n\t\"category\": \"${category}\"," +
-//            "\n\t\"rating\": \"${rating}\"\n}")
-//          ).asJSON
-//        .check(status.is(200)))
-//        .pause(1)
-//    }
-//  }
-
-  /* This is better, through a template file */
+  ////    repeat(5) {
+  ////      feed(customFeeder)
+  ////        .exec(http("Post New Game")
+  ////        .post("videogames/")
+  ////        .body(StringBody(
+  ////                      "{" +
+  ////                      "\n\t\"id\": ${gameId}," +
+  ////                      "\n\t\"name\": \"${name}\"," +
+  ////                      "\n\t\"releaseDate\": \"${releaseDate}\"," +
+  ////                      "\n\t\"reviewScore\": ${reviewScore}," +
+  ////                      "\n\t\"category\": \"${category}\"," +
+  ////                      "\n\t\"rating\": \"${rating}\"\n}")
+  ////        ).asJson
+  ////        .check(status.is(200)))
+  ////        .pause(1)
+  ////    }
+  ////  }
 
   def postNewGame() = {
     repeat(5) {
-      // now call the feeder here
-      feed(customFeeder).
-        exec(http("Post New Game")
-          .post("videogames")
-          .body(ElFileBody("bodies/NewGameTemplate.json")).asJson //template file goes in test/resources/bodies
+      feed(customFeeder)
+        .exec(http("Post New Game")
+          .post("videogames/")
+            .body(ElFileBody("bodies/NewGameTemplate.json")).asJson
           .check(status.is(200)))
         .pause(1)
     }
   }
 
-  val scn = scenario("Video Game DB")
-    .exec(postNewGame())
+  val scn = scenario("Post new games")
+      .exec(postNewGame())
+
 
   setUp(
     scn.inject(atOnceUsers(1))
   ).protocols(httpConf)
-
 
 }

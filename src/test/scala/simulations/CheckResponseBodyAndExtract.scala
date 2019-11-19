@@ -5,30 +5,25 @@ import io.gatling.http.Predef._
 
 class CheckResponseBodyAndExtract extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
 
-  val scn = scenario("Video Game DB")
+  val scn = scenario("Check JSON Path")
 
-    // use jsonPath to check for a value
-    .exec(http("Get specific game")
-    .get("videogames/1")
-    .check(jsonPath("$.name").is("Resident Evil 4"))) // link to jsonPath document / tutorial
+      .exec(http("Get specific game")
+      .get("videogames/1")
+      .check(jsonPath("$.name").is("Resident Evil 4")))
 
-    // use jsonPath to extract a value and save into a variable called "gameId"
-    .exec(http("Get All Video Games - 2nd call")
-    .get("videogames")
-    .check(jsonPath("$[1].id").saveAs("gameId")))
-    .exec { session => println(session); session }
+      .exec(http("Get all video games")
+      .get("videogames")
+      .check(jsonPath("$[1].id").saveAs("gameId")))
+      .exec { session => println(session); session}
 
-
-    // reuse the saved variable "gameId" as a parameter in the next call
-    .exec(http("Get specific game - 2nd call with parameter")
-    .get("videogames/${gameId}")
-    .check(jsonPath("$.name").is("Gran Turismo 3"))
-    .check(bodyString.saveAs("responseBody")))
-    .exec { session => println(session("responseBody").as[String]); session} // this will print it out
+      .exec(http("Get specific game")
+      .get("videogames/${gameId}")
+      .check(jsonPath("$.name").is("Gran Turismo 3"))
+      .check(bodyString.saveAs("responseBody")))
+        .exec { session => println(session("responseBody").as[String]); session}
 
 
   setUp(

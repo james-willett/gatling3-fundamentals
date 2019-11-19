@@ -5,54 +5,49 @@ import io.gatling.http.Predef._
 
 class VideoGameFullTestTemplate extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
+    .proxy(Proxy("localhost", 8888))
 
-  /*** HTTP Calls ***/
+  /*** HTTP CALLS ***/
   def getAllVideoGames() = {
     exec(
-      http("Get All Video Games")
+      http("Get all video games")
         .get("videogames")
-        .check(status.is(200)))
+        .check(status.is(200))
+    )
   }
 
-  // .... add other calls here - Create new game, Get single game, Delete game
+  // add other calls here
 
+  /** SCENARIO DESIGN */
 
-  /*** Scenario Design ***/
-
-    // using the HTTP calls created, create a scenario that does the following:
+  // using the http call, create a scenario that does the following:
   // 1. Get all games
-  // 2. create new game
-  // 3. get details of that single game
-  // 4. delete the game
+  // 2. Create new Game
+  // 3. Get details of that single
+  // 4. Delete the game
 
+  /** SETUP LOAD SIMULATION */
 
-  /*** Setup Load Simulation ***/
-
-  // create a scenario that uses rutime parameters for:
+  // create a scenario that has runtime parameters for:
   // 1. Users
   // 2. Ramp up time
   // 3. Test duration
 
-  /*** Custom Feeder ***/
+  /** Custom Feeder */
 
-  // to generate the data for the Create New Game JSON
+  // to generate the date for the Create new Game JSON
 
+  /** Helper methods */
 
-  /*** Helper Methods ***/
+  // for the custom feeder, or the defaults for the runtime parameters... and anything
 
-  // for the custom feeder, or for the defaults of the runtime parameters... and anything else
+  /** Variables */
 
+  // for the helper methods
 
-  /*** Variables ***/
-
-  // for the helper methods above
-  // and the parameters for the runtime variables
-
-
-  /*** Before & After  ***/
-  // to print out messages at the start and end of the test
+  /** Before & After */
+  // to print out message at the start and end of the test
 
 }

@@ -3,31 +3,29 @@ package simulations
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-// this class also shows how to debug and print out session info
+import scala.concurrent.duration.DurationInt
+
 class CheckResponseCode extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
 
-  val scn = scenario("Video Game DB")
+  val scn = scenario("Video Game DB - 3 calls")
 
-    .exec(http("Get All Video Games - 1st call")
+    .exec(http("Get all video games - 1st call")
       .get("videogames")
-        .check(status.is(200))) // check for a specific status
-        .exec { session => println(session); session } // this will give some high level data, but not that interesting as we don't have any variables!
-
+        .check(status.is(200)))
+    .pause(5)
 
     .exec(http("Get specific game")
       .get("videogames/1")
-        .check(status.in(200 to 210)) // check status is in a range
-        .check(bodyString.saveAs("responseBody"))) // this will save the whole response body
-        .exec { session => println(session("responseBody").as[String]); session} // this will print it out
+        .check(status.in(200 to 210)))
+    .pause(1, 20)
 
-
-    .exec(http("Get All Video Games - 2nd call")
+    .exec(http("Get all Video games - 2nd call")
       .get("videogames")
-        .check(status.not(404), status.not(500))) // check status is not something
+        .check(status.not(404), status.not(500)))
+    .pause(3000.milliseconds)
 
   setUp(
     scn.inject(atOnceUsers(1))

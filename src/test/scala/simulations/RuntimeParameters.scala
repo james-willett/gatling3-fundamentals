@@ -3,54 +3,48 @@ package simulations
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-import scala.concurrent.duration.DurationInt
+import scala.concurrent.duration._
 
 class RuntimeParameters extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
-    .header("Accept", "application/json")
-
-  // method that will get a property or default
   private def getProperty(propertyName: String, defaultValue: String) = {
     Option(System.getenv(propertyName))
       .orElse(Option(System.getProperty(propertyName)))
       .getOrElse(defaultValue)
   }
 
-  // now specify the properties
   def userCount: Int = getProperty("USERS", "5").toInt
   def rampDuration: Int = getProperty("RAMP_DURATION", "10").toInt
   def testDuration: Int = getProperty("DURATION", "60").toInt
 
-  // print out the properties at the start of the test
   before {
     println(s"Running test with ${userCount} users")
     println(s"Ramping users over ${rampDuration} seconds")
-    println(s"Total Test duration: ${testDuration} seconds")
+    println(s"Total test duration: ${testDuration} seconds")
   }
 
-  // add in test step(s)
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
+    .header("Accept", "application/json")
+
   def getAllVideoGames() = {
     exec(
-      http("Get All Video Games - 1st call")
+      http("Get all video games")
         .get("videogames")
-        .check(status.is(200)))
+        .check(status.is(200))
+    )
   }
 
-  // add a scenario
-  val scn = scenario("Video Game DB")
-    .forever() { // add in the forever() method - users now loop forever
+  val scn = scenario("Get all video games")
+    .forever() {
       exec(getAllVideoGames())
     }
 
-  // setup the load profile
-  // example command line: ./gradlew gatlingRun-simulations.RuntimeParameters -DUSERS=10 -DRAMP_DURATION=5 -DDURATION=30
   setUp(
     scn.inject(
       nothingFor(5 seconds),
-      rampUsers(userCount) during (rampDuration seconds))
-  )
-    .protocols(httpConf)
+      rampUsers(userCount) during (rampDuration second)
+    )
+  ).protocols(httpConf)
     .maxDuration(testDuration seconds)
+
 }

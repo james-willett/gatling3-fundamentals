@@ -3,41 +3,42 @@ package simulations
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-import scala.concurrent.duration.DurationInt
-
+import scala.concurrent.duration._
 
 class RampUsersLoadSimulation extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
 
   def getAllVideoGames() = {
     exec(
-      http("Get All Video Games - 1st call")
+      http("Get all video games")
         .get("videogames")
-        .check(status.is(200)))
+        .check(status.is(200))
+    )
   }
 
-  def getSpecificVideoGame() = {
-    exec(http("Get Specific Video Game")
-      .get("videogames/2")
-      .check(status.is(200)))
+  def getSpecificGame() = {
+    exec(
+      http("Get Specific Game")
+        .get("videogames/2")
+        .check(status.is(200))
+    )
   }
 
-  val scn = scenario("Video Game DB")
+  val scn = scenario("Basic Load Simulation")
     .exec(getAllVideoGames())
     .pause(5)
-    .exec(getSpecificVideoGame())
+    .exec(getSpecificGame())
     .pause(5)
     .exec(getAllVideoGames())
 
   setUp(
     scn.inject(
-            nothingFor(5 seconds), // do nothing for 5 seconds
-           constantUsersPerSec(10) during (10 seconds),  // injects users at a constant rate, during a given duration. Users injects at regular intervals
-            rampUsersPerSec(1) to (5) during (20 seconds)  // inject users from starting rate to target rate, during a given duration
-    ).protocols(httpConf.inferHtmlResources()) // inferHtmlResources will fetch everything on the page (JS, CSS, images etc.)
+      nothingFor(5 seconds),
+   //   constantUsersPerSec(10) during (10 seconds)
+      rampUsersPerSec(1) to (5) during (20 seconds)
+    ).protocols(httpConf.inferHtmlResources())
   )
 
 }

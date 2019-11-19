@@ -3,10 +3,11 @@ import io.gatling.http.Predef._
 
 class MyFirstTest extends Simulation {
 
-  // 1 HTTP conf - this is now handled in the BaseSimulation
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  // 1 Http Conf
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
+    .proxy(Proxy("localhost", 8888))
+
 
   // 2 Scenario Definition
   val scn = scenario("My First Test")
@@ -17,6 +18,5 @@ class MyFirstTest extends Simulation {
   setUp(
     scn.inject(atOnceUsers(1))
   ).protocols(httpConf)
-
 
 }

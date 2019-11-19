@@ -68,11 +68,11 @@ class VideoGameFullTest extends Simulation {
   }
 
   def postNewGame() = {
-      feed(customFeeder).
-        exec(http("Post New Game")
-          .post("videogames")
-          .body(ElFileBody("bodies/NewGameTemplate.json")).asJson //template file goes in gating/resources/bodies
-          .check(status.is(200)))
+    feed(customFeeder).
+      exec(http("Post New Game")
+        .post("videogames")
+        .body(ElFileBody("bodies/NewGameTemplate.json")).asJson //template file goes in gating/resources/bodies
+        .check(status.is(200)))
   }
 
   def getLastPostedGame() = {
@@ -90,15 +90,15 @@ class VideoGameFullTest extends Simulation {
 
   /*** Scenario Design ***/
   val scn = scenario("Video Game DB")
-      .forever() {
-           exec(getAllVideoGames())
-          .pause(2)
-          .exec(postNewGame())
-          .pause(2)
-          .exec(getLastPostedGame())
-          .pause(2)
-          .exec(deleteLastPostedGame())
-      }
+    .forever() {
+      exec(getAllVideoGames())
+        .pause(2)
+        .exec(postNewGame())
+        .pause(2)
+        .exec(getLastPostedGame())
+        .pause(2)
+        .exec(deleteLastPostedGame())
+    }
 
   /*** Setup Load Simulation ***/
   setUp(

@@ -7,37 +7,48 @@ import scala.concurrent.duration._
 
 class BasicLoadSimulation extends Simulation {
 
-  val httpConf = http
-    .baseUrl("http://localhost:8080/app/")
+  val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
- //   .proxy(Proxy("localhost", 8866).httpsPort(8866))
 
   def getAllVideoGames() = {
     exec(
-      http("Get All Video Games - 1st call")
+      http("Get all video games")
         .get("videogames")
-        .check(status.is(200)))
+        .check(status.is(200))
+    )
   }
 
-  def getSpecificVideoGame() = {
-    exec(http("Get Specific Video Game")
-      .get("videogames/2")
-      .check(status.is(200)))
+  def getSpecificGame() = {
+    exec(
+      http("Get Specific Game")
+        .get("videogames/2")
+        .check(status.is(200))
+    )
   }
 
-  val scn = scenario("Video Game DB")
+  val scn = scenario("Basic Load Simulation")
     .exec(getAllVideoGames())
     .pause(5)
-    .exec(getSpecificVideoGame())
+    .exec(getSpecificGame())
     .pause(5)
     .exec(getAllVideoGames())
 
-  // Load Simulation 1:  basic Load Simulation
+  val scn2 = scenario("Basic Load Simulation 2")
+    .exec(getAllVideoGames())
+    .pause(5)
+    .exec(getSpecificGame())
+    .pause(5)
+    .exec(getAllVideoGames())
+
   setUp(
     scn.inject(
-      nothingFor(5 seconds), // do nothing for 5 seconds
-      atOnceUsers(5), // inject 5 users at once
-      rampUsers(10) during (10 seconds) // inject 10 users over a period of 10 seconds
-    ).protocols(httpConf.inferHtmlResources()) // inferHtmlResources will fetch everything on the page (JS, CSS, images etc.)
+      nothingFor(5 seconds),
+      atOnceUsers(5),
+      rampUsers(10) during (10 seconds)
+    ).protocols(httpConf.inferHtmlResources()),
+    scn2.inject(
+      atOnceUsers(500)
+    ).protocols(httpConf)
   )
+
 }

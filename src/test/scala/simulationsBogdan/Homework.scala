@@ -13,36 +13,36 @@ import scala.util.Random
 
 class Homework extends Simulation {
 
-  //get runtime parameters properties
+  /*** get runtime parameters properties ***/
   private def getProperty(propertyName: String, defaultValue: String) = {
     Option(System.getenv(propertyName))
       .orElse(Option(System.getProperty(propertyName)))
       .getOrElse(defaultValue)
   }
 
-  //define runtime parameters
+  /*** define runtime parameters ***/
   def userCount: Int = getProperty("USERS", "5").toInt
   def rampDuration: Int = getProperty("RAMP_DURATION", "10").toInt
   def testDuration: Int = getProperty("DURATION", "20").toInt
 
-  //print useful infos about the test
+  /*** print useful infos about the test ***/
   before {
     println(s"Running test with ${userCount} users")
     println(s"Ramping users over ${rampDuration} seconds")
     println(s"Total test duration: ${testDuration} seconds")
   }
 
-  //define http conf details
+  /*** define http conf details ***/
   val httpConf = http.baseUrl("http://localhost:8080/app/")
     .header("Accept", "application/json")
 
-  //define local variables
+  /*** define local variables ***/
   var idNumbers = (200 to 300).iterator
   val rnd = new Random()
   val now = LocalDate.now()
   val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-  //define generators
+  /*** define generators ***/
   def getRandomDate(now: LocalDate, rnd: Random) = {
     now.minusDays(rnd.nextInt(30)).format(dateFormat)
   }
@@ -51,7 +51,7 @@ class Homework extends Simulation {
     rnd.alphanumeric.filter(_.isLetter).take(length).mkString
   }
 
-  //define custom feeder for creating entries with new id any time
+  /*** define custom feeder for creating entries with new id any time ***/
   val customFeeder = Iterator.continually(Map(
     "gameId" -> idNumbers.next(),
     "name" -> ("Game" + randomString(5)),
@@ -63,7 +63,7 @@ class Homework extends Simulation {
 
 
 
-  //define API methods
+  /*** define API methods ***/
   def getAllVideoGames() = {
     exec(
       http("Get all video games")
@@ -98,7 +98,7 @@ class Homework extends Simulation {
     )
   }
 
-  //define test scenario
+  /*** define test scenario ***/
   val loadScenario = scenario("Real load test is running...")
       .forever() {
         exec(getAllVideoGames())
@@ -111,7 +111,7 @@ class Homework extends Simulation {
         )
       }
 
-  //execute test scenario
+  /*** execute test scenario ***/
   setUp(
     loadScenario.inject(
       nothingFor(2 seconds),

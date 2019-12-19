@@ -1,0 +1,4 @@
+language: scala
+sudo: false
+
+script: "gatling:test -Dgatling.simulationClass=finalSimulation.VideoGameFullTest"

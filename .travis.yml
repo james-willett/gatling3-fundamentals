@@ -1,4 +1,12 @@
 language: scala
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - lynx
+
 script: "mvn gatling:test -Dgatling.simulationClass=finalSimulation.VideoGameFullTest"
+
+after_success:
+  - if [ -f /home/travis/build/james-willett/gatling3-fundamentals/target/gatling/videogamefulltest-*/index.html ]; then lynx -dump /home/travis/build/james-willett/gatling3-fundamentals/outputs/lint-results-debug.html; fi

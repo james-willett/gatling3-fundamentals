@@ -1,19 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.james-willett</groupId>
-  <artifactId>gatling3-fundamentals</artifactId>
-  <version>3.3.1</version>
+  <artifactId>com.test</artifactId>
+  <version>1.0-SNAPSHOT</version>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gatling.version>${project.version}</gatling.version>
-    <gatling-plugin.version>3.0.3</gatling-plugin.version>
-    <scala-maven-plugin.version>4.2.0</scala-maven-plugin.version>
+    <encoding>UTF-8</encoding>
+
+    <gatling.version>3.3.1</gatling.version>
+    <gatling-maven-plugin.version>3.0.5</gatling-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -21,42 +20,25 @@
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
       <version>${gatling.version}</version>
-      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-app</artifactId>
+      <version>${gatling.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-recorder</artifactId>
+      <version>${gatling.version}</version>
     </dependency>
   </dependencies>
 
   <build>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
     <plugins>
-      <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>${scala-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-            <configuration>
-              <jvmArgs>
-                <jvmArg>-Xss100M</jvmArg>
-              </jvmArgs>
-              <args>
-                <arg>-target:jvm-1.8</arg>
-                <arg>-deprecation</arg>
-                <arg>-feature</arg>
-                <arg>-unchecked</arg>
-                <arg>-language:implicitConversions</arg>
-                <arg>-language:postfixOps</arg>
-              </args>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>io.gatling</groupId>
         <artifactId>gatling-maven-plugin</artifactId>
-        <version>${gatling-plugin.version}</version>
+        <version>${gatling-maven-plugin.version}</version>
       </plugin>
     </plugins>
   </build>

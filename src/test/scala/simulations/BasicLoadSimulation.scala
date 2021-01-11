@@ -42,9 +42,9 @@ class BasicLoadSimulation extends Simulation {
 
   setUp(
     scn.inject(
-      nothingFor(5 seconds),
+      nothingFor(5.seconds),
       atOnceUsers(5),
-      rampUsers(10) during (10 seconds)
+      rampUsers(10) during (10.seconds)
     ).protocols(httpConf.inferHtmlResources()),
     scn2.inject(
       atOnceUsers(500)

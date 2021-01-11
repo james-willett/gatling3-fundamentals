@@ -41,10 +41,10 @@ class RuntimeParameters extends Simulation {
 
   setUp(
     scn.inject(
-      nothingFor(5 seconds),
-      rampUsers(userCount) during (rampDuration second)
+      nothingFor(5.seconds),
+      rampUsers(userCount) during (rampDuration.second)
     )
   ).protocols(httpConf)
-    .maxDuration(testDuration seconds)
-
+    .maxDuration(testDuration.seconds)
+  
 }

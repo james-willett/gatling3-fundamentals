@@ -1,12 +1,11 @@
 package finalSimulation
 
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-import scala.concurrent.duration.DurationInt
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import scala.concurrent.duration._
 import scala.util.Random
 
 class VideoGameFullTest extends Simulation {
@@ -103,11 +102,11 @@ class VideoGameFullTest extends Simulation {
   /*** Setup Load Simulation ***/
   setUp(
     scn.inject(
-      nothingFor(5 seconds),
-      rampUsers(userCount) during (rampDuration seconds))
+      nothingFor(5.seconds),
+      rampUsers(userCount) during (rampDuration.seconds))
   )
     .protocols(httpConf)
-    .maxDuration(testDuration seconds)
+    .maxDuration(testDuration.seconds)
 
   /*** After ***/
   after {

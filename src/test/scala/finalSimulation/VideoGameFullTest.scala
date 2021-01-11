@@ -63,10 +63,7 @@ class VideoGameFullTest extends Simulation {
     exec(
       http("Get All Video Games")
         .get("videogames")
-        .check(status.is(200))
-        .check(jsonPath("yourPath")
-        .transform(x => x.toInt + 1))
-    )
+        .check(status.is(200)))
   }
 
   def postNewGame() = {

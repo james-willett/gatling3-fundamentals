@@ -46,5 +46,5 @@ class RuntimeParameters extends Simulation {
     )
   ).protocols(httpConf)
     .maxDuration(testDuration.seconds)
-
+  
 }

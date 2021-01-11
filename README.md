@@ -1,12 +1,7 @@
-gatling-maven-plugin-demo
+Gatling 3 Fundamentals
 =========================
 
-Simple showcase of a maven project using the gatling-maven-plugin.
+Course code for the Gatling Fundamentals Udemy course - updated for Gatling v3
 
-To test it out, simply execute the following command:
+https://www.udemy.com/gatling-fundamentals
 
-    $mvn gatling:test -Dgatling.simulationClass=computerdatabase.BasicSimulation
-
-or simply:
-
-    $mvn gatling:test
